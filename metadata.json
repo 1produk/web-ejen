@@ -1,0 +1,6 @@
+{
+  "name": "TAKAFUL Landing Page Builder",
+  "description": "Sistem pembina landing page ejen Takaful tahunan dengan templat tersuai, kad perubatan, hibah takaful, penyakit kritikal, dan pautan sebut harga WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

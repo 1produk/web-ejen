@@ -1,0 +1,196 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Profil pengguna termasuk ejen pembeli dan pentadbir sistem",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID Pengguna Firebase Auth" },
+        "email": { "type": "string", "format": "email", "description": "Emel pengguna" },
+        "fullName": { "type": "string", "maxLength": 100, "description": "Nama penuh pengguna" },
+        "phone": { "type": "string", "maxLength": 25, "description": "Nombor telefon atau WhatsApp" },
+        "agentId": { "type": "string", "maxLength": 50, "description": "ID Ejen atau introducer" },
+        "country": { "type": "string", "maxLength": 50, "description": "Negara" },
+        "state": { "type": "string", "maxLength": 50, "description": "Negeri" },
+        "address": { "type": "string", "maxLength": 250, "description": "Alamat kediaman / surat-menyurat" },
+        "city": { "type": "string", "maxLength": 60, "description": "Bandar" },
+        "postalCode": { "type": "string", "maxLength": 15, "description": "Poskod" },
+        "occupation": { "type": "string", "maxLength": 80, "description": "Pekerjaan" },
+        "industry": { "type": "string", "maxLength": 80, "description": "Industri" },
+        "dob": { "type": "string", "maxLength": 20, "description": "Tarikh lahir jika ada" },
+        "role": { "type": "string", "enum": ["admin", "buyer"], "description": "Peranan pengguna dalam sistem" },
+        "accountStatus": { "type": "string", "enum": ["Pending", "Aktif", "Digantung", "Diarkibkan"], "description": "Status akaun ejen" },
+        "avatarUrl": { "type": "string", "maxLength": 2048, "description": "URL gambar profil ejen" },
+        "createdAt": { "type": "string", "description": "Masa pendaftaran" },
+        "updatedAt": { "type": "string", "description": "Masa kemas kini profil" }
+      },
+      "required": ["email", "fullName", "phone", "role", "accountStatus"]
+    },
+    "LandingPage": {
+      "title": "LandingPage",
+      "description": "Konfigurasi dan kandungan landing page peribadi ejen",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID landing page" },
+        "userId": { "type": "string", "description": "ID ejen pemilik" },
+        "slug": { "type": "string", "maxLength": 50, "description": "Pautan unik slug contohnya nama-ejen" },
+        "title": { "type": "string", "maxLength": 120, "description": "Tajuk utama landing page" },
+        "bio": { "type": "string", "maxLength": 600, "description": "Pengenalan diri atau bio ringkas" },
+        "templateId": { "type": "string", "enum": ["template1", "template2", "template3"], "description": "Templat reka bentuk dipilih" },
+        "colorTheme": { "type": "string", "enum": ["green", "red", "blue", "yellow", "orange"], "description": "Skema warna templat" },
+        "status": { "type": "string", "enum": ["Draf", "Menunggu Pengesahan", "Diterbitkan", "Digantung", "Tamat Langganan"], "description": "Status penerbitan landing page" },
+        "whatsappNumber": { "type": "string", "maxLength": 25, "description": "Nombor WhatsApp rasmi untuk dihubungi" },
+        "whatsappMessage": { "type": "string", "maxLength": 300, "description": "Mesej pratetap untuk WhatsApp CTA" },
+        "isPublished": { "type": "boolean", "description": "Sama ada halaman diterbitkan secara langsung" },
+        "socialLinks": { "type": "object", "description": "Pautan media sosial ejen" },
+        "customNotice": { "type": "string", "maxLength": 300, "description": "Notis tersuai atau mesej sokongan" },
+        "createdAt": { "type": "string", "description": "Masa dicipta" },
+        "updatedAt": { "type": "string", "description": "Masa terakhir dikemas kini" }
+      },
+      "required": ["userId", "slug", "templateId", "colorTheme", "status"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Produk, pakej atau kempen infaq yang dipaparkan dalam landing page",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID Produk" },
+        "userId": { "type": "string", "description": "ID ejen pemilik" },
+        "landingPageId": { "type": "string", "description": "ID landing page berkaitan" },
+        "title": { "type": "string", "maxLength": 120, "description": "Nama pakej infaq atau produk" },
+        "category": { "type": "string", "maxLength": 50, "description": "Kategori produk/infaq" },
+        "description": { "type": "string", "maxLength": 1000, "description": "Penerangan terperinci" },
+        "benefits": { "type": "string", "maxLength": 500, "description": "Manfaat atau fadhilat infaq" },
+        "priceOrTarget": { "type": "string", "maxLength": 50, "description": "Harga atau sasaran dana jika ada" },
+        "actionText": { "type": "string", "maxLength": 50, "description": "Teks butang tindakan" },
+        "actionUrl": { "type": "string", "maxLength": 1024, "description": "Pautan butang tindakan" },
+        "imageUrl": { "type": "string", "maxLength": 2048, "description": "URL gambar produk" },
+        "sortOrder": { "type": "number", "description": "Susunan keutamaan paparan" },
+        "isActive": { "type": "boolean", "description": "Status aktif produk" },
+        "createdAt": { "type": "string", "description": "Masa dicipta" },
+        "updatedAt": { "type": "string", "description": "Masa dikemas kini" }
+      },
+      "required": ["userId", "title", "actionText"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Rekod pesanan langganan tahunan dan bukti pembayaran",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID pesanan" },
+        "userId": { "type": "string", "description": "ID ejen pembeli" },
+        "userEmail": { "type": "string", "description": "Emel ejen" },
+        "userName": { "type": "string", "description": "Nama ejen" },
+        "userPhone": { "type": "string", "description": "Nombor telefon ejen" },
+        "planName": { "type": "string", "description": "Nama pelan langganan" },
+        "amount": { "type": "number", "description": "Jumlah bayaran RM" },
+        "currency": { "type": "string", "description": "Mata wang" },
+        "orderStatus": { "type": "string", "enum": ["Menunggu Pengesahan", "Diluluskan", "Ditolak", "Dibatalkan"], "description": "Status pengesahan pesanan" },
+        "paymentMethod": { "type": "string", "description": "Kaedah pembayaran" },
+        "receiptUrl": { "type": "string", "maxLength": 2048, "description": "URL atau data bukti pembayaran" },
+        "receiptNote": { "type": "string", "maxLength": 500, "description": "Nota rujukan bank atau nombor transaksi" },
+        "verifiedBy": { "type": "string", "description": "ID atau emel admin yang mengesahkan" },
+        "verifiedAt": { "type": "string", "description": "Masa bayaran disahkan atau ditolak" },
+        "rejectionReason": { "type": "string", "maxLength": 300, "description": "Sebab penolakan jika berkenaan" },
+        "createdAt": { "type": "string", "description": "Masa pendaftaran pesanan" },
+        "updatedAt": { "type": "string", "description": "Masa status pesanan diubah" }
+      },
+      "required": ["userId", "amount", "orderStatus"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "Status langganan tahunan 365 hari",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID langganan" },
+        "userId": { "type": "string", "description": "ID ejen pemilik" },
+        "orderId": { "type": "string", "description": "ID pesanan yang disahkan" },
+        "status": { "type": "string", "enum": ["Menunggu Bayaran", "Aktif", "Hampir Tamat", "Tamat", "Diperbaharui"], "description": "Status langganan" },
+        "startDate": { "type": "string", "description": "Tarikh mula aktif" },
+        "endDate": { "type": "string", "description": "Tarikh tamat (365 hari selepas aktif)" },
+        "renewalCount": { "type": "number", "description": "Bilangan pembaharuan dilakukan" },
+        "lastRenewedAt": { "type": "string", "description": "Masa pembaharuan terakhir" },
+        "createdAt": { "type": "string", "description": "Masa dicipta" },
+        "updatedAt": { "type": "string", "description": "Masa dikemas kini" }
+      },
+      "required": ["userId", "status"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Notifikasi sistem untuk ejen dan admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID notifikasi" },
+        "userId": { "type": "string", "description": "ID penerima notifikasi" },
+        "title": { "type": "string", "maxLength": 120, "description": "Tajuk mesej" },
+        "message": { "type": "string", "maxLength": 500, "description": "Kandungan mesej" },
+        "type": { "type": "string", "enum": ["payment", "account", "subscription", "landing_page", "system"], "description": "Kategori notifikasi" },
+        "read": { "type": "boolean", "description": "Status sudah dibaca" },
+        "createdAt": { "type": "string", "description": "Masa notifikasi dihantar" }
+      },
+      "required": ["userId", "title", "message", "type"]
+    },
+    "AdminAuditLog": {
+      "title": "AdminAuditLog",
+      "description": "Log audit tindakan pentadbir sistem",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID log audit" },
+        "adminId": { "type": "string", "description": "ID admin pelaku" },
+        "adminEmail": { "type": "string", "description": "Emel admin" },
+        "action": { "type": "string", "maxLength": 100, "description": "Jenis tindakan admin" },
+        "targetUserId": { "type": "string", "description": "ID pengguna sasaran" },
+        "targetUserName": { "type": "string", "description": "Nama pengguna sasaran" },
+        "details": { "type": "string", "maxLength": 500, "description": "Butiran tindakan" },
+        "timestamp": { "type": "string", "description": "Masa tindakan dilakukan" }
+      },
+      "required": ["adminId", "action", "details"]
+    },
+    "Slug": {
+      "title": "Slug",
+      "description": "Pendaftaran slug unik untuk semakan pantas konflik",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Teks slug unik contohnya 'ustaz-ali'" },
+        "userId": { "type": "string", "description": "ID ejen pemilik" },
+        "landingPageId": { "type": "string", "description": "ID landing page" },
+        "createdAt": { "type": "string", "description": "Masa pendaftaran slug" }
+      },
+      "required": ["userId", "landingPageId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Profil pengguna peribadi dan tetapan akaun ejen"
+    },
+    "/landingPages/{pageId}": {
+      "schema": "LandingPage",
+      "description": "Konfigurasi reka bentuk dan kandungan landing page"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Koleksi pakej infaq atau produk ejen"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Pesanan pembelian langganan dan bukti bayaran"
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": "Subscription",
+      "description": "Maklumat tempoh sah dan tarikh tamat langganan"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "Notifikasi status bayaran, akaun dan langganan"
+    },
+    "/adminAuditLogs/{logId}": {
+      "schema": "AdminAuditLog",
+      "description": "Sejarah tindakan pengesahan dan pengurusan admin"
+    },
+    "/slugs/{slug}": {
+      "schema": "Slug",
+      "description": "Peta carian slug unik kepada ejen pemilik"
+    }
+  }
+}
